@@ -3,8 +3,7 @@ import pygame
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 720
 PLAYER_SIZE = 40
-GROUND_HEIGHT = 100
-PLAYER_STARTYPOS = SCREEN_HEIGHT - GROUND_HEIGHT - PLAYER_SIZE
+GROUND_HEIGHT = 300
 JUMP_POWER = 400
 MOVE_SPEED = 250
 OBSTACLE_START = SCREEN_WIDTH + 100 # leftmost position of the obstacle when it starts
@@ -15,10 +14,11 @@ def main():
     clock = pygame.time.Clock()
     running = True
     dt = 0
+    
     jumpVelocity = 0
     jumping = False
     
-    playerY = PLAYER_STARTYPOS
+    playerY = SCREEN_HEIGHT - GROUND_HEIGHT - PLAYER_SIZE
     
     obstacleLeft = OBSTACLE_START
     obstacleRight = OBSTACLE_START + 50    
@@ -61,6 +61,10 @@ def main():
         if(obstacleRight < 0):
             obstacleLeft = OBSTACLE_START
             obstacleRight = obstacleLeft + 50
+        
+        # checks if the player hits the obstacle
+        if(obstacle.collideobjects([player])):
+            running = False
         # GAME STOPS HERE
         
         # flip() the display to put your work on screen
@@ -71,9 +75,6 @@ def main():
         dt = clock.tick(60) / 1000
     
     pygame.quit()
-    
-    
-    
     
 if(__name__ == "__main__"):
     main()
